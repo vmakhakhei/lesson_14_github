@@ -1,5 +1,4 @@
 import time
-
 import pytest
 from selene import browser
 
@@ -16,11 +15,9 @@ def browser_mobile():
 
 @pytest.fixture
 def browser_desktop():
-    browser.config.window_height = 1920
-    browser.config.window_width = 1080
+    browser.driver.maximize_window()
 
 
-@pytest.mark.desktop
 def test_github_desktop(browser_desktop):
     browser.open("https://github.com/")
     browser.element('[href="/login"]').click()
@@ -28,7 +25,6 @@ def test_github_desktop(browser_desktop):
     pass
 
 
-@pytest.mark.mobile
 def test_github_mobile(browser_mobile):
     browser.open("https://github.com/")
     browser.element('[type="button"] .Button-label').click()
