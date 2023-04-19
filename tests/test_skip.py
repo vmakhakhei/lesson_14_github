@@ -4,7 +4,7 @@
 """
 import time
 import pytest
-from selene import browser
+from selene import browser, have
 
 
 @pytest.fixture(params=["mobile", "desktop"])
@@ -21,7 +21,7 @@ def browser_setting(request):
 def test_github_desktop(browser_setting):
     if browser_setting == "desktop":
         browser.element('[href="/login"]').click()
-        time.sleep(5)
+        assert browser.element('h1').should(have.text('Sign in to GitHub'))
     if browser_setting == "mobile":
         pytest.skip("Test only for desktop screen size")
 
@@ -32,3 +32,4 @@ def test_github_mobile(browser_setting):
     if browser_setting == "mobile":
         browser.element('[type="button"] .Button-label').click()
         browser.element('[href="/login"]').click()
+        assert browser.element('h1').should(have.text('Sign in to GitHub'))
